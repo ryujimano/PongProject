@@ -8,6 +8,8 @@ TagManager:
   - ShowOnPlay
   - PauseButton
   - PlayButton
+  - FinishedText
+  - PausedText
   layers:
   - Default
   - TransparentFX

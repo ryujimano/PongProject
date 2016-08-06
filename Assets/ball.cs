@@ -9,18 +9,14 @@ public class ball : MonoBehaviour {
 	public GameObject leftRacket;
 	public GameObject rightRacket;
 
-	public float countDown = 3;
+	public static float countDown = 3;
 	public float speed = 30;
 
-
 	public Text countDownTimer;
+	public Text finishedText;
 
 	public bool rt = false;
 	public bool lt = false;
-
-	public GameObject pauseButton;
-
-	public ViewModel vm;
 
 
 	float hitPos (Vector2 ballPos, Vector2 racketPos, float racketHeight) {
@@ -28,15 +24,15 @@ public class ball : MonoBehaviour {
 	}
 
 	void Start () {
-		pauseButton = GameObject.FindGameObjectWithTag ("PauseButton");
+		countDown = 3;
 		rt = true;
 	}
 
 	void Update() {
 		if (countDown <= 0) {
-			pauseButton.SetActive (false);
+			ViewModel.pauseButton.SetActive (false);
 		} else {
-			pauseButton.SetActive (true);
+			ViewModel.pauseButton.SetActive (true);
 		}
 
 		if (!(su.gameSetLeft()) && !(su.gameSetRight())) {
@@ -121,6 +117,13 @@ public class ball : MonoBehaviour {
 		leftRacket.transform.position = new Vector3 (-20, 0);
 		rightRacket.transform.position = new Vector3 (20, 0);
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (0, 0) * speed;
+		if (su.gameSetLeft ()) {
+			ViewModel.showFinished ();
+			finishedText.text = "Left Wins!";
+		} else {
+			ViewModel.showFinished ();
+			finishedText.text = "Right Wins!";
+		}
 	}
 
 }
